@@ -1,0 +1,86 @@
+Written Questions
+
+Q1. Run the web crawler using the configurations located at src/main/config/written_question_1a.json and
+    src/main/config/written_question_1b.json. The only difference between these configurations is that one always uses
+    the sequential crawler and the other always uses the parallel crawler. Inspect the profile output in
+    profileData.txt.
+
+    If you are using a multi-processor computer, you should notice that SequentialWebCrawler#crawl and
+    ParallelWebCrawler#crawl took about the same amount of time, but PageParserImpl#parse took much longer when run with
+    the ParallelWebCrawler.
+
+    Why did the parser take more time when run with ParallelWebCrawler?
+
+    The parsing time is more with ParallelWebCrawler because the parser calculates the parsing time
+     by adding the time taken by all the threads of the parallelWebCralwer.Also,the ParallelWebCrawler visits
+     a lot more urls than the SequentailWebCrawler.
+
+    written_question_1a
+    [INFO] ------------------------------------------------------------------------
+    [INFO] Total time:  11.451 s
+    [INFO] Finished at: 2022-09-01T12:52:04-07:00
+    [INFO] ------------------------------------------------------------------------
+    WordCounts:   {data=303, learning=292, udacity=220, with=172, machine=149}
+    UrlsVisited:   15
+
+    written_question_1b
+    [INFO] ------------------------------------------------------------------------
+    [INFO] BUILD SUCCESS
+    [INFO] ------------------------------------------------------------------------
+    [INFO] Total time:  7.789 s
+    [INFO] Finished at: 2022-09-01T12:53:15-07:00
+    [INFO] ------------------------------------------------------------------------
+    WordCounts:   {udacity=1687, data=1621, with=1183, your=1132, learning=1038}
+    UrlsVisited:   143
+
+
+
+
+Q2. Your manager ran your crawler on her old personal computer, using the configurations from Q1, and she notices that
+    the sequential crawler actually outperforms the parallel crawler. She would like to know why.
+
+    (a) Suggest one reason why the sequential web crawler was able to read more web pages than the parallel crawler.
+        (Hint: Try setting "parallelism" to 1 in the JSON configs to simulate your manager's computer.)
+
+        The sequential crawler uses only thread for processing the data and hence requires less resources as compared to
+        a parallel crawler.
+        The parallel crawler creates multiple threads, hence requires an extra overhead of creating the threads and the
+        required resources for these threads.
+
+
+    (b) Suggest one scenario in which the parallel web crawler will almost certainly perform better than the sequential
+        crawler. Why will it perform better?
+
+        The parallel web crawler will certainly perform better in a multi-core computer because it will provide the right
+        environment for the threads to run in parallel.
+
+Q3. Analyze your method profiler through the lens of Aspect Oriented Programming, by answering the following questions:
+
+    (a) What cross-cutting concern is being addressed by the com.udacity.webcrawler.profiler.Profiler class?
+
+    The com.udacity.webcrawler.profiler addresses the performance profiling cross-cutting concern.
+
+    (b) What are the join points of the Profiler in the web crawler program?
+
+    The joint points of the Profiler are the methods annotated with @Profiled annotation.
+
+
+Q4. Identify three (3) different design patterns used in this project, and explain which interfaces, classes, and/or
+    libraries use or implement those design patterns.
+
+    For each pattern, name one thing about the pattern that you LIKED, and one thing you DISLIKED. If you did not like
+    anything, you can name two things you disliked.
+
+    1. Builder Pattern
+    USED BY : CrawlerConfiguration, CrawlResult, ParserModule and PageParser interface.
+    LIKE : I like that it helps to construct the object property by property and so makes the code easy to read.
+    DISLIKE: Additional code needs to be written.
+
+    2. Factory Pattern - PageParserFactory.
+    LIKE : Like the fact that it helps to create several related objects.
+    DISLIKE: Difficult to understand at first.
+
+    3. Dependency Injection pattern - WebCrawlerMain (Guice plugging is used for dependency injection here)
+    LIKE : I like the fact that it makes the testing/logging so much easier.
+    DISLIKE : Need to understand/configure the dependency framework we are using.
+
