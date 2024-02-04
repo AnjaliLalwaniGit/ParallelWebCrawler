@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
 
@@ -49,7 +50,7 @@ public final class CrawlResultWriter {
     else{
       //create a file and write
       try(
-             Writer writer= new BufferedWriter(new FileWriter(file));
+             Writer writer= Files.newBufferedWriter(file.toPath());
        ){
              write(writer);
       }catch (IOException ioException){
