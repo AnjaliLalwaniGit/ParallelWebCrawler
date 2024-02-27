@@ -138,6 +138,6 @@ final class PageParserImpl implements PageParser {
    * Returns true if and only if the given {@link URI} represents a local file.
    */
   private static boolean isLocalFile(URI uri) {
-    return uri.getScheme() != null && uri.getScheme().equals("file");
+    return uri.getScheme() != null && "file".equals(uri.getScheme());
   }
 }
