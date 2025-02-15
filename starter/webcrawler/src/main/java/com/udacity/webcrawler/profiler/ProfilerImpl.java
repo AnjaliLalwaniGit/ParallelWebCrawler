@@ -1,5 +1,6 @@
 package com.udacity.webcrawler.profiler;
 
+import java.nio.file.Files;
 import javax.inject.Inject;
 import java.io.*;
 import java.lang.reflect.Method;
@@ -70,7 +71,7 @@ final class ProfilerImpl implements Profiler {
     else{
       //create a file and write
       try(
-              Writer writer= new BufferedWriter(new FileWriter(file));
+              Writer writer= Files.newBufferedWriter(file.toPath());
       ){
         writeData(writer);
       }catch (IOException ioException){
